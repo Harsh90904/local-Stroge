@@ -64,11 +64,25 @@ function updatedata(index) {
     inp_index.id = "inp_index"
     inp_index.type = "hidden";
 
-    name = table_data[index]
-    id = table_data[index]
-    age = table_data[index]
+    name.value = table_data[index].id;
+    id.value = table_data[index].name;
+    age.value = table_data[index].age;
+
 }
 function update() {
+    let name = document.getElementById("inp-name").value;
+    let id = document.getElementById("inp-id").value;
+    let age = document.getElementById("inp-age").value;
+    let inp_index = document.getElementById("inp_index").value;
 
+
+    table_data[index] = {
+        id:id.value,
+        name:name.value,
+        age:age.value,
+    };
+
+    window.localStorage.setItem("data" , JSON.stringify(table_data));
+    displaydata();
 }
 displaydata();
