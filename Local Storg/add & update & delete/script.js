@@ -54,35 +54,42 @@ function deletedata(index) {
     window.localStorage.setItem("data", JSON.stringify(table_data));
     displaydata();
 }
+
 function updatedata(index) {
     ifupdate = true;
-     document.getElementById("change_name").value = "UPDATE"
-    let name = document.getElementById("inp-name").value;
-    let id = document.getElementById("inp-id").value;
-    let age = document.getElementById("inp-age").value;
-    let inp_index = document.createElement("input");
-    inp_index.id = "inp_index"
-    inp_index.type = "hidden";
+    currentIndex = index;
 
-    name.value = table_data[index].id;
-    id.value = table_data[index].name;
-    age.value = table_data[index].age;
+   
+    document.getElementById("inp-name").value = table_data[index].name;
+    document.getElementById("inp-id").value = table_data[index].id;
+    document.getElementById("inp-age").value = table_data[index].age;
 
+  
+    document.getElementById("change_name").value = "UPDATE";
 }
+
 function update() {
     let name = document.getElementById("inp-name").value;
     let id = document.getElementById("inp-id").value;
     let age = document.getElementById("inp-age").value;
-    let inp_index = document.getElementById("inp_index").value;
 
 
-    table_data[index] = {
-        id:id.value,
-        name:name.value,
-        age:age.value,
+    table_data[currentIndex] = {
+        id: id,
+        name: name,
+        age: age,
     };
 
-    window.localStorage.setItem("data" , JSON.stringify(table_data));
+
+    window.localStorage.setItem("data", JSON.stringify(table_data));
+
+    document.getElementById("change_name").value = ""; 
+    document.getElementById("inp-name").value = "";
+    document.getElementById("inp-id").value = "";
+    document.getElementById("inp-age").value = "";
+    document.getElementById("change_name").value = "SUBMIT";
+
     displaydata();
 }
+
 displaydata();
