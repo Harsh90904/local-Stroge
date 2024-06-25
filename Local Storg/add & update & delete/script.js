@@ -1,51 +1,74 @@
-let data = JSON.parse(window.localStorage.getItem('data')) || [];
+let table_data = JSON.parse(window.localStorage.getItem('data')) || [];
 let ifupdate = false;
 
-function alldata(){
-    if(ifupdate){
+function alldata() {
+    if (ifupdate) {
         update();
-    }
-    else{
-        let inp_name = document.getElementById("inp-name").value;
-        let inp_id = document.getElementById("inp-id").value;
-        let inp_age = document.getElementById("inp-age").value;
+    } else {
+        let name = document.getElementById("inp-name").value;
+        let id = document.getElementById("inp-id").value;
+        let age = document.getElementById("inp-age").value;
 
-
-        data.push({
-            id:inp_id,
-            name:inp_name,
-            age:inp_age,
+        table_data.push({
+            id: id,
+            name: name,
+            age: age,
         });
-    }
 
-    window.localStorage.setItem("data" , JSON.stringify(data))
-    displaydata();
+        window.localStorage.setItem("data", JSON.stringify(table_data));
+        displaydata();
+    }
 }
 
+function displaydata() {
+    let table = document.getElementById("data-table").getElementsByTagName("tbody")[0];
+    table.innerHTML = "";
 
-function displaydata(){
-    let table = document.getElementById('data_table').getElementsByTagName("tbody")[0];
+    table_data.forEach((element, index) => {
+        let row = document.createElement('tr');
 
-    let row = document.createElement('tr');
+        let tdname = document.createElement('td');
+        let tdid = document.createElement('td');
+        let tdage = document.createElement('td');
+        let tdupd = document.createElement('td');
+        let tddel = document.createElement('td');
 
-    let tdname = document.createElement('td');
-    let tdid = document.createElement('td');
-    let tdage = document.createElement('td');
-    let tdupd = document.createElement('td');
-    let tddel = document.createElement('td');
+        tdname.innerHTML = element.name;
+        tdid.innerHTML = element.id;
+        tdage.innerHTML = element.age;
+        tdupd.innerHTML = `<input type="button" value="Update" onclick="updatedata(${index})">`;
+        tddel.innerHTML = `<input type="button" value="Delete" onclick="deletedata(${index})">`;
 
-    tdname.innerHTML = Element.inp_name;
-    tdid.innerHTML = Element.inp_id;
-    tdage.innerHTML = Element.inp_age;
-    tdupd.innerHTML = ` <input type="button" value="Update" onclick="updatedata()">`;
-    tddel.innerHTML = `<input type="button" value="delete" onclick="deletedata()">`;
+        row.appendChild(tdname);
+        row.appendChild(tdid);
+        row.appendChild(tdage);
+        row.appendChild(tdupd);
+        row.appendChild(tddel);
 
-    tdname.append(row);
-    tdid.append(row);
-    tdage.append(row);
-    tdupd.append(row);
-    tddel.append(row);
+        table.appendChild(row);
+    });
+}
 
-    row.append(table);
+function deletedata(index) {
+    table_data.splice(index, 1);
+    window.localStorage.setItem("data", JSON.stringify(table_data));
+    displaydata();
+}
+function updatedata(index) {
+    ifupdate = true;
+     document.getElementById("change_name").value = "UPDATE"
+    let name = document.getElementById("inp-name").value;
+    let id = document.getElementById("inp-id").value;
+    let age = document.getElementById("inp-age").value;
+    let inp_index = document.createElement("input");
+    inp_index.id = "inp_index"
+    inp_index.type = "hidden";
+
+    name = table_data[index]
+    id = table_data[index]
+    age = table_data[index]
+}
+function update() {
+
 }
 displaydata();
